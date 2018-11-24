@@ -5,10 +5,8 @@ body {
 
 }
 .wrapper{
-    width: 100%;
-    
- 
-        display: flex;
+    width: 99vw;
+         display: flex;
         flex-direction: column;
         flex-wrap: nowrap;
         justify-content: center;
@@ -24,11 +22,17 @@ body {
     display: none;
     left: 0;
     opacity: 0;
-    display: flex;transition: 1.5s linear;
+    width: 99vw;
+    display: flex;
+    justify-content: space-around;
+    transition: 1.5s linear;
     }
     .active{ 
        opacity: 1;
-       display: flex;transition: 1.5s linear;
+       display: flex;
+       justify-content: space-around;
+       transition: 1.5s linear;
+       
       }
       .active:hover{
        
@@ -40,11 +44,11 @@ flex-wrap: nowrap;
 justify-content: center;
 align-items: center;
 align-content: stretch;
-width:360px;
+width:300px;
 height: 420px;
 border-radius: 15px;
 border: 3px solid yellow;
-margin-left: 50px;
+
 margin-top: 50px;
 background-color: aliceblue;
 }
@@ -56,6 +60,7 @@ background-color: aliceblue;
     display: flex;
     height: 500px;
     width: 1000px;
+    width: 99vw;
 }
 
 h1{
@@ -111,8 +116,9 @@ form{
       opacity: 0.5;
       
   }
-  .control{
-      display: flex;
+  
+  #control{
+      display: none;
       justify-content:space-around;
   }
   button{

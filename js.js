@@ -7,7 +7,7 @@ let inquiry;
 let masdiv = [];
 const mass = [];
 let WIDTH;
-let COUNTONWINDOW;
+let COUNTONWINDOW=1;
 let countfind = 1;
 let ii;
 window.onload = function () {
@@ -19,7 +19,8 @@ window.onload = function () {
     }
     findAllVideo(15, 0);
     WIDTH = (window.innerWidth);
-    COUNTONWINDOW = Math.floor(WIDTH / 360);
+    COUNTONWINDOW = Math.floor(WIDTH / 320);
+    if (COUNTONWINDOW>4)COUNTONWINDOW=4;
   };
   nextSlider.onclick = function () { go(); };
   prevSlider.onclick = function () { prev(); };
@@ -54,9 +55,10 @@ window.onload = function () {
     for (let i = 0; i < data.items.length; i++) {
       masdiv.push(createBlock(data.items[i].snippet.title, data.items[i].snippet.publishedAt, data.items[i].snippet.channelTitle, data.items[i].statistics.viewCount, data.items[i].statistics.likeCount));
     }
-    for (let j = 0; j < masdiv.length / COUNTONWINDOW; j++) {
+    for (let j = 0; j < Math.floor(masdiv.length / COUNTONWINDOW); j++) {
       const divv = document.createElement('div');
       divv.className = 'slide';
+      
       for (let i = 0; i < COUNTONWINDOW; i++) {
         divv.appendChild(masdiv[i + j * COUNTONWINDOW]);
         console.log(masdiv[i + j * COUNTONWINDOW]);
@@ -67,13 +69,15 @@ window.onload = function () {
 
     console.log(mass);
     const boxs = document.getElementById('boxs');
-    for (let i = 0; i < masdiv.length / COUNTONWINDOW; i++) {
+    for (let i = 0; i < Math.floor(masdiv.length / COUNTONWINDOW); i++) {
       boxs.insertBefore(mass.pop(), null);
     }
     content = document.querySelectorAll('.slide');
     console.log(content);
     //circle = document.querySelectorAll('.circle');
     go();
+    let control=document.getElementById('control');
+    control.style.display="flex"
   }
 
   function go() {

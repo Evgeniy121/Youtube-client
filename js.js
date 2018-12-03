@@ -7,10 +7,38 @@ let inquiry;
 let masdiv = [];
 const mass = [];
 let WIDTH;
-let COUNTONWINDOW=1;
+let COUNTONWINDOW = 1;
 let countfind = 1;
 let ii;
+let first = false;
 window.onload = function () {
+  goToCircle = function (n) {
+    if (ii >= 0) {
+      content[ii].classList.remove('active');
+      circle[icircle].classList.remove('active_circle');
+    }
+    // var circle=document.getElementById("circle");
+    // circle.innerHTML=ii+1;
+    n -= ii % 4;
+    ii += n;
+    console.log(ii);
+    icircle = n + icircle;
+    console.log(circle);
+    if (icircle === 4) {
+      icircle = 0; countecrCircle++;
+      for (let i = 0; i < circle.length; i++) {
+        circle[i].innerHTML = 4 * countecrCircle + i;
+      }
+    }
+    if (ii >= content.length - 3) {
+      countfind++;
+      findAllVideo(countfind * 15, (countfind - 1) * 15);
+      console.log('ищем');
+    }
+    content[ii].classList.add('active');
+    circle[icircle].classList.add('active_circle');
+
+  };
   search1.onclick = function () {
     ii = -1;
     const element = document.getElementById('boxs');
@@ -19,10 +47,10 @@ window.onload = function () {
     }
     findAllVideo(15, 0);
     WIDTH = (window.innerWidth);
-    COUNTONWINDOW = Math.floor(WIDTH / 320);
-    if (COUNTONWINDOW>4)COUNTONWINDOW=4;
+    COUNTONWINDOW = Math.floor(WIDTH / 380);
+    if (COUNTONWINDOW > 4)COUNTONWINDOW = 4;
   };
-  nextSlider.onclick = function () { go(); };
+  nextSlider.onclick = function () { go(1); };
   prevSlider.onclick = function () { prev(); };
   function findAllVideo(n, start) {
     inquiry = document.getElementById('inquiry').value;
@@ -49,7 +77,6 @@ window.onload = function () {
         display(data);
       });
   }
-
   function display(data) {
     masdiv = [];
     for (let i = 0; i < data.items.length; i++) {
@@ -58,7 +85,7 @@ window.onload = function () {
     for (let j = 0; j < Math.floor(masdiv.length / COUNTONWINDOW); j++) {
       const divv = document.createElement('div');
       divv.className = 'slide';
-      
+
       for (let i = 0; i < COUNTONWINDOW; i++) {
         divv.appendChild(masdiv[i + j * COUNTONWINDOW]);
         console.log(masdiv[i + j * COUNTONWINDOW]);
@@ -66,7 +93,6 @@ window.onload = function () {
 
       mass.push(divv);
     }
-
     console.log(mass);
     const boxs = document.getElementById('boxs');
     for (let i = 0; i < Math.floor(masdiv.length / COUNTONWINDOW); i++) {
@@ -74,39 +100,62 @@ window.onload = function () {
     }
     content = document.querySelectorAll('.slide');
     console.log(content);
-    //circle = document.querySelectorAll('.circle');
-    go();
-    let control=document.getElementById('control');
-    control.style.display="flex"
+    circle = document.querySelectorAll('.circle');
+    if (!first) { go(1); first = true; }
+    for (let i = 0; i < circle.length; i++) {
+      circle[i].innerHTML = 4 * countecrCircle + i;
+    }
+    const control = document.getElementById('control');
+    control.style.display = 'flex';
   }
-
-  function go() {
+  let countecrCircle = 0;
+  let icircle = -1;
+  function go(n) {
     if (ii >= 0) {
-      content[ii].classList.remove('active'); 
-     }
-     var circle=document.getElementById("circle");
-    circle.innerHTML=ii+1;
-    ii = ++ii;
-    
-    content[ii].classList.add('active');
-   
-    if (ii === content.length - 1) {
+      content[ii].classList.remove('active');
+      circle[icircle].classList.remove('active_circle');
+    }
+    // var circle=document.getElementById("circle");
+    // circle.innerHTML=ii+1;
+    ii += n;
+    console.log(ii);
+    icircle = n + icircle;
+    console.log(circle);
+    if (icircle === 4) {
+      icircle = 0; countecrCircle++;
+      for (let i = 0; i < circle.length; i++) {
+        circle[i].innerHTML = 4 * countecrCircle + i;
+      }
+    }
+    if (ii >= content.length - 1) {
       countfind++;
       findAllVideo(countfind * 15, (countfind - 1) * 15);
       console.log('ищем');
     }
+    content[ii].classList.add('active');
+    circle[icircle].classList.add('active_circle');
   }
   function prev() {
     content[ii].classList.remove('active');
-    if (ii - 1 >= 0) { --ii; 
-      var circle=document.getElementById("circle");
-      circle.innerHTML=ii;
+    circle[icircle].classList.remove('active_circle');
+    if (ii - 1 >= 0) {
+      --ii;
+      --icircle;
+      if (icircle < 0) {
+        countecrCircle--; icircle = 3;
+        for (let i = 0; i < circle.length; i++) {
+          circle[i].innerHTML = 4 * countecrCircle + i;
+        }
+      }
+      // var circle=document.getElementById("circle");
+      // circle.innerHTML=ii;
     }
+    circle[icircle].classList.add('active_circle');
     content[ii].classList.add('active');
   }
   function createBlock(description, publishedAt, name, watch, like) {
     const div = document.createElement('div');
-    div.className = 'block'; 
+    div.className = 'block';
     const divh1 = document.createElement('div');
     divh1.id = 'title';
     const h1 = document.createElement('h1');
